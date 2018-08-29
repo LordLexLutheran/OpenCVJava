@@ -2,6 +2,7 @@ import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.highgui.HighGui;
+import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.videoio.VideoCapture;
 import org.opencv.videoio.Videoio;
@@ -10,6 +11,10 @@ public class CVTest {
     public static void main(String[] args) {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         
+        String currentDir = System.getProperty("user.dir");
+        String narutoFile = currentDir + "images\\Naruto.png";
+        System.out.println(narutoFile);
+        
         // sets up webcam
         VideoCapture cap = new VideoCapture(0);
         cap.set(Videoio.CAP_PROP_FRAME_WIDTH, 640);
@@ -17,9 +22,12 @@ public class CVTest {
         
         System.out.println("Opened capture");
         
-        while (cap.isOpened()) {
+        boolean loop = true;
+        
+        while (/*cap.isOpened()*/ loop = true) {
                 // create image storage
                 Mat image = Mat.zeros(640, 480, CvType.CV_8UC3);
+                Mat naruto = Imgcodecs.imread(narutoFile);
                 
                 System.out.println("New frame");
                 
@@ -34,7 +42,7 @@ public class CVTest {
                 Imgproc.threshold(image, image, 100, 255, Imgproc.THRESH_BINARY);
                 
                 // display the image in a window
-                HighGui.imshow("Image", image);
+                HighGui.imshow("Image", naruto);
                 
                 // check for any keypresses
                 int key = HighGui.waitKey(33);
